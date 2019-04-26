@@ -1,12 +1,18 @@
 #!/bin/bash
-name="Luke Smith"
-webdir="$(pwd)"
-website="https://lukesmith.xyz/" # Keep a trailing slash.
+name="Niklas"
+webdir="/srv/http/lb/"
+website="https://www.homepage.here/" # Keep a trailing slash.
 css="../style.css"
-blogfile="2019.html"
+blogfile="index.html"
 indexfile="blogindex.html"
 rssfile="rss.xml"
 [ -z "$EDITOR" ] && EDITOR="vim"
+
+update() { \
+  cp "$blogfile" "$webdir/$blogfile"
+  cp "$rssfile" "$webdir/$rssfile"
+  cp "$indexfile" "$webdir/$indexfile"
+}
 
 [ ! -d "$webdir/blog/.drafts" ] &&
 read -erp "Initialize blog in $webdir?" ask &&
@@ -14,6 +20,7 @@ read -erp "Initialize blog in $webdir?" ask &&
 	printf "Initializing blog system...\\n"
 	mkdir -pv "$webdir/blog/.drafts" || printf "Error. Do you have write permissions in this directory?\\n"
 	echo "Options +Indexes" > "$webdir/blog/.htaccess"
+  update
 else
 	exit
 fi
@@ -51,6 +58,7 @@ publish() { \
 	sed -i "/ \"$base.html\"/d" "$webdir/blog/.htaccess"
 	echo "AddDescription \"$realname\" \"$basefile\" #$rssdate" >> "$webdir/blog/.htaccess"
 	rm -f "$webdir/blog/.drafts/$chosen"
+  update
 }
 
 confirm() { read -erp "Really $1 \"$base\"? (y/N) " choice && echo "$choice" | grep -i "^y$" >/dev/null || exit 1 ;}
@@ -59,7 +67,8 @@ delete() { \
 	sed -i "/<item/{:a;N;/<\\/item>/!ba};/#$base.html<\\/guid/d" $rssfile
 	sed -i "/<div/{:a;N;/<\\/div>/!ba};/id='$base'/d" $blogfile
 	sed -i "/<li>.*<a href=\"blog\\/$base.html\">/d" $indexfile
-	rm "$webdir/blog/$basefile" 2>/dev/null && printf "Old blog entry removed.\\n" ;}
+	rm "$webdir/blog/$basefile" 2>/dev/null && printf "Old blog entry removed.\\n"
+  update ;}
 
 revise() { awk '/^<small>\[/{flag=1;next}/<footer>/{flag=0}flag' "$webdir/blog/$chosen" > "$webdir/blog/.drafts/$basefile"
 	"$EDITOR" "$webdir/blog/.drafts/$basefile"
