@@ -11,37 +11,6 @@
 
 <!-- LB -->
 
-<item>
-<title>Test</title>
-<guid>https://www.homepage.here/index.html#test</guid>
-<pubDate>Fri, 26 Apr 2019 20:26:04 +0200</pubDate>
-<description><![CDATA[
-<p>Test</p>
-]]></description>
-</item>
-
-
-<item>
-<title>Test</title>
-<guid>https://www.homepage.here/index.html#test</guid>
-<pubDate>Fri, 26 Apr 2019 20:24:01 +0200</pubDate>
-<description><![CDATA[
-<p>This is a test</p>
-]]></description>
-</item>
-
-
-<item>
-<title>Hello world.</title>
-<guid>https://lukesmith.xyz/index.html#hello-world</guid>
-<pubDate>Fri, 26 Apr 2019 20:17:02 +0200</pubDate>
-<description><![CDATA[
-<p>Hello world!
-This is the first post on this blog.
-Hope it works.
-Bold smile <strong>:D</strong></p>
-]]></description>
-</item>
 
 </channel>
 </rss>
